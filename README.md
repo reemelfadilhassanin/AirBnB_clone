@@ -1,6 +1,8 @@
 # AirBnB clone
 <p align="center">
-![Image link]()
+
+![ICONE](hbnb.PNG)
+
 
 
 ### Welcome to the AirBnB clone project!
@@ -27,7 +29,7 @@ A command interpreter is a tool that allows to manage objects for the AirBn webs
 To run the program you need Python 3 installed in your computer and then execute the following commands
 in the terminal:
 
-- Clone this repository: git clone "https://github.com/reem/AirBnB_clone.git
+- Clone this repository: git clone "https://github.com/reemelfadilhassanin/AirBnB_clone
 - Go into the directory: cd AirBnB_clone
 - The cmd should work in both interactive and non - interactive mode  like a shell.
 
@@ -50,38 +52,53 @@ in the terminal:
 > $ ./console.py
 (hbnb) help
 Documented commands (type help <topic>):
-========================================
-EOF  help  quit
-(hbnb) 
-(hbnb) 
-(hbnb) quit
-$
+=======================================
+
+> EOF  help  quit
+
+> (hbnb) 
+> (hbnb) 
+> (hbnb) quit
+> $
 
 **Non - Interactive mode**
 ---
 > $ echo "help" | ./console.py
-(hbnb)
-Documented commands (type help <topic>):
+
+> (hbnb)
+
+> Documented commands (type help <topic>):
 ========================================
-EOF  help  quit
-(hbnb) 
-$
-$ cat test_help
-help
-$
-$ cat test_help | ./console.py
-(hbnb)
-Documented commands (type help <topic>):
+
+> EOF  help  quit
+
+> (hbnb) 
+> $
+
+> $ cat test_help
+
+> help
+
+> $
+
+> $ cat test_help | ./console.py
+
+> (hbnb)
+
+> Documented commands (type help <topic>):
 ========================================
-EOF  help  quit
-(hbnb) 
-$
+
+> EOF  help  quit
+
+> (hbnb) 
+
+> $
 
 ## Authors
 - Hiba Elfaki [Github](https://github.com/hibakiz).
 - Reem Hassanin [Github](https://github.com/reemelfadilhassanin).
 
 ## License
----
+
 This project is a Public.
 #### LAST UPDATE: 9 JAN 2024
