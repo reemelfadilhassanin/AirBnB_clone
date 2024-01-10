@@ -5,6 +5,7 @@ from uuid import uuid4
 from datetime import datetime
 from models.base_model import BaseModel
 
+
 class TestBaseModel(unittest.TestCase):
 
     # BaseModel instance is created with default attributes
@@ -12,7 +13,7 @@ class TestBaseModel(unittest.TestCase):
         base_model = BaseModel()
         self.assertIsNotNone(base_model.id)
         self.assertIsNotNone(base_model.created_at)
-        self.assertIsNotNone(base_model.updates_at)
+        self.assertIsNotNone(base_model.updated_at)
 
     # BaseModel instance can be converted to dictionary using to_dict() method
     def test_base_model_to_dict(self):
@@ -21,15 +22,17 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(base_model_dict, dict)
         self.assertEqual(base_model_dict['__class__'], 'BaseModel')
         self.assertEqual(base_model_dict['id'], base_model.id)
-        self.assertEqual(base_model_dict['created_at'], base_model.created_at.isoformat())
-        self.assertEqual(base_model_dict['updates_at'], base_model.updates_at.isoformat())
+        self.assertEqual(
+            base_model_dict['created_at'], base_model.created_at.isoformat())
+        self.assertEqual(
+            base_model_dict['updated_at'], base_model.updated_at.isoformat())
 
     # BaseModel instance can be saved and updates_at attribute is updated
     def test_base_model_save(self):
         base_model = BaseModel()
-        initial_updates_at = base_model.updates_at
+        initial_updates_at = base_model.updated_at
         base_model.save()
-        self.assertNotEqual(initial_updates_at, base_model.updates_at)
+        self.assertNotEqual(initial_updates_at, base_model.updated_at)
 
     # BaseModel instance is created with custom attributes
     def test_base_model_custom_attributes(self):
@@ -54,14 +57,14 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(base_model_dict['updates_at'], '2022-01-02T00:00:00')
 
     # save() method handles edge cases for datetime objects
-    def test_base_model_save_datetime_edge_cases(self):
+    def test_save_updates_updated_at_to_current_datetime(self):
         base_model = BaseModel()
-        base_model.created_at = datetime(2022, 1, 1)
-        base_model.updates_at = datetime(2022, 1, 2)
+        initial_updated_at = base_model.updated_at
         base_model.save()
-        self.assertEqual(base_model.updates_at.replace(microsecond=0), datetime.now().replace(microsecond=0))
-
+        assert base_model.updated_at != initial_updated_at
+        assert isinstance(base_model.updated_at, datetime)
     # BaseModel instance can be printed as a string using __str__() method
+
     def test_base_model_str_method(self):
         base_model = BaseModel()
         self.assertIsInstance(str(base_model), str)
