@@ -8,7 +8,14 @@ from models.base_model import BaseModel
 
 class TestBaseModel(unittest.TestCase):
 
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
     # BaseModel instance is created with default attributes
+
     def test_base_model_default_attributes(self):
         base_model = BaseModel()
         self.assertIsNotNone(base_model.id)
@@ -61,7 +68,7 @@ class TestBaseModel(unittest.TestCase):
         base_model = BaseModel()
         initial_updated_at = base_model.updated_at
         base_model.save()
-        assert base_model.updated_at != initial_updated_at
+        assert base_model.updated_at > initial_updated_at
         assert isinstance(base_model.updated_at, datetime)
     # BaseModel instance can be printed as a string using __str__() method
 
@@ -80,3 +87,54 @@ class TestBaseModel(unittest.TestCase):
         base_model = BaseModel()
         base_model.some_attribute = 123
         self.assertIn("some_attribute", str(base_model))
+
+    def test_no_arguments(self):
+        model = BaseModel()
+        assert isinstance(model.id, str)
+        assert isinstance(model.created_at, datetime)
+        assert isinstance(model.updated_at, datetime)
+
+    def test_from_dict_empty(self):
+        my_new_model = BaseModel()
+
+        self.assertIsNotNone(my_new_model.id)
+        self.assertIsInstance(my_new_model.created_at, datetime)
+        self.assertIsInstance(my_new_model.updated_at, datetime)
+
+    def test_kwargs(self):
+        attributes = {
+            'id': 'test_id',
+            'created_at': '2022-01-11T12:34:56.789012',
+            'updated_at': '2022-01-11T12:45:00.123456',
+            'name': 'Test_Model',
+            'my_number': 42,
+            'additional_attr': 'test_value'
+        }
+
+        m_model = BaseModel(**attributes)
+
+        self.assertEqual(m_model.id, attributes['id'])
+        self.assertEqual(m_model.name, attributes['name'])
+        self.assertEqual(m_model.my_number, attributes['my_number'])
+        self.assertEqual(m_model.additional_attr,
+                         attributes['additional_attr'])
+        self.assertIsInstance(m_model.created_at, datetime)
+        self.assertIsInstance(m_model.updated_at, datetime)
+
+    def test_not_equal_base(self):
+        """this to check if two base are not equale in attribute
+        """
+        m1 = BaseModel(name="Model1", my_number=42)
+        m2 = BaseModel(name="Model2", my_number=42)
+
+        self.assertNotEqual(m1, m2)
+
+    def test_instance_diff(self):
+        m1 = BaseModel(name="Model1", my_number=42)
+        diff_in = "not_a_BaseModel_instance"
+
+        self.assertNotEqual(m1, diff_in)
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -18,18 +18,14 @@ class BaseModel:
         """Common default attributes for all instances"""
         if not kwargs:
             self.id = str(uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            self.created_at = self.updated_at = datetime.now()
         else:
-            for key in kwargs:
+            for key, value in kwargs.items():
                 if key != '__class__':
-                    setattr(self, key, datetime.fromisoformat(kwargs[key]))
-            if 'id' not in kwargs:
-                self.id = str(uuid4())
-            if 'created_at' not in kwargs:
-                self.created_at = datetime.now()
-            if 'updated_at' not in kwargs:
-                self.updated_at = datetime.now()
+                    if key in ['created_at', 'updated_at']:
+                        setattr(self, key, datetime.fromisoformat(value))
+                    else:
+                        setattr(self, key, value)
 
     def __str__(self):
         """ formating """
