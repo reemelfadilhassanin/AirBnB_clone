@@ -2,6 +2,9 @@
 """ The entry point of the command interpreter"""
 
 import cmd
+import re
+from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 try:
     import gnureadline as readline
 except ImportError:
@@ -130,6 +133,38 @@ class HBNBCommand(cmd.Cmd):
         setattr(obj, attribute_name, value)
         storage.save()
 
+	def do_create(self, args):
+		"""Create new instance of a class given in {args}"""
+		if args:
+			if args == "BaseModel":
+				new_inst = BaseModel()
+				new_inst.save()
+				print(new_inst.id)
+			else:
+				print("** class doesn't exist **")
+		else:
+			print("** class name missing **")
+
+	def do_show(self, args):
+		"""Prints the string representation of an instance based on the class name and id"""
+		if args:
+			words = args.split()
+			if words[0] == "BaseModel":
+				if len(words) != 2:
+					print("** instance id missing **")
+				else:
+					all_obj = FileStorage.all(BaseModel)
+					for obj in all_obj:
+						if obj.id == words[1]:
+							print(BaseModel.to_dict(obj))
+						print(obj.id)
+					print("** no instance found **")
+				
+			else:
+				print("** class doesn't exist **")
+			
+		else:
+			print("** class name missing **")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
