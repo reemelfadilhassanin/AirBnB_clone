@@ -3,6 +3,7 @@
 
 from uuid import uuid4
 from datetime import datetime
+import models
 
 
 class BaseModel:
@@ -18,7 +19,9 @@ class BaseModel:
         """Common default attributes for all instances"""
         if not kwargs:
             self.id = str(uuid4())
-            self.created_at = self.updated_at = datetime.now()
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+
         else:
             for key, value in kwargs.items():
                 if key != '__class__':
@@ -34,6 +37,8 @@ class BaseModel:
     def save(self):
         """updates the public instance attribute updated_at"""
         self.updated_at = datetime.now()
+        models.storage.new(self)
+        models.storage.save()
 
     def to_dict(self):
         """returns a dictionary containing all keys/values of __dict__"""
