@@ -2,6 +2,7 @@
 """This storage class for AirBnB to enable persistence"""
 import json
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -46,3 +47,7 @@ class FileStorage:
                     self.__objects[k] = v
         except FileNotFoundError:
             pass
+
+    def classes(self):
+        """manage correctly serialization and deserialization of User"""
+        return {'BaseModel': BaseModel, 'User': User}
