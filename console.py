@@ -63,13 +63,9 @@ class HBNBCommand(cmd.Cmd):
                 all_obj = storage.all()
                 instance_key = "{}.{}".format(words[0], words[1])
 
-                for key, obj in all_obj.items():
-                    if key.split('.')[1] == words[1]:
-                        print(BaseModel.to_dict(obj))
-                        flag = 1
-                        break
-
-                if flag == 0:
+                if instance_key in all_obj:
+                    print(all_obj[instance_key])
+                else:
                     print("** no instance found **")
 
     def do_destroy(self, args):
