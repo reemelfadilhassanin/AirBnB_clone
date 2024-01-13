@@ -54,7 +54,7 @@ class_list = {
 
 class HBNBCommand(cmd.Cmd):
     """ inheriting the Cmd class to customize it by ourself"""
-    prompt = ('(hbnb) ')
+    prompt = '(hbnb) '
 
 
     def do_create(self, args):
@@ -196,10 +196,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, args):
         """ EOF command to exit the program"""
-        print()
         return True
 
-    def do_emptyline(self):
+    def emptyline(self):
         """Do nothing on empty lines."""
         pass
 
