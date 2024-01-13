@@ -2,6 +2,7 @@
 """This storage class for AirBnB to enable persistence"""
 import json
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -41,7 +42,8 @@ class FileStorage:
         """
         try:
             with open(self.__file_path, 'r', encoding="UTF-8") as f:
-                for k, v in (json.load(f)).items():
+                data = json.load(f)
+                for k, v in data.items():
                     v = eval(v["__class__"])(**v)
                     self.__objects[k] = v
         except FileNotFoundError:

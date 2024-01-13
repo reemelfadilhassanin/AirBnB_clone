@@ -7,6 +7,8 @@ import json
 from datetime import datetime
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
+
 
 try:
     import gnureadline as readline
@@ -38,8 +40,10 @@ def normalize_value(str_v):
         return str_v[1:-1]  # Remove the double quotes
     else:
         return str_v.strip('"')  # remove the double uotes if found
-    
-class_list = {'BaseModel': BaseModel}
+
+
+class_list = {'BaseModel': BaseModel, 'User': User}
+
 
 class HBNBCommand(cmd.Cmd):
     """ inheriting the Cmd class to customize it by ourself"""
@@ -94,7 +98,6 @@ class HBNBCommand(cmd.Cmd):
                 if flag == 0:
                     print("** no instance found **")
 
-
     def do_destroy(self, args):
         """Deletes an instance based on class name and id"""
         if args:
@@ -138,6 +141,7 @@ class HBNBCommand(cmd.Cmd):
             if class_name is None or instance_key.startswith(class_name):
                 instances_list.append(str(instances[instance_key]))
         print(instances_list)
+
     def do_update(self, args):
         """Updates an instance on the class name and id"""
         args = args.split()
@@ -158,7 +162,7 @@ class HBNBCommand(cmd.Cmd):
         if instance_key not in all_obj:
             print("** no instance found **")
             return
-            
+
         if len(args) < 3:
             print("** attribute name missing **")
             return
@@ -188,8 +192,7 @@ class HBNBCommand(cmd.Cmd):
 
         instance.updated_at = datetime.now()
         instance.save()
-        
-        
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
