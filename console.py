@@ -47,15 +47,14 @@ def normalize_value(str_v):
 
 
 class_list = {
-        'BaseModel': BaseModel,
-        'User': User
-        }
+    'BaseModel': BaseModel,
+    'User': User
+}
 
 
 class HBNBCommand(cmd.Cmd):
     """ inheriting the Cmd class to customize it by ourself"""
     prompt = '(hbnb) '
-
 
     def do_create(self, args):
         """Create new instance of a class given in {args}"""
@@ -201,6 +200,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """Do nothing on empty lines."""
         pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

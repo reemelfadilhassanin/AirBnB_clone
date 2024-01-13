@@ -149,3 +149,7 @@ class test_fileStorage(unittest.TestCase):
 
         # Check if the __objects dictionary is empty
         assert len(file_storage._FileStorage__objects) == 0
+
+
+if __name__ == "__main__":
+    unittest.main()
