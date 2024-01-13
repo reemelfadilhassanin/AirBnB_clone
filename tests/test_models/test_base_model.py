@@ -135,6 +135,80 @@ class TestBaseModel(unittest.TestCase):
 
         self.assertNotEqual(m1, diff_in)
 
+    def test_init_of_base(self):
+        """Check __init__ of BaseModel"""
+        model = BaseModel()
+        self.assertIsInstance(model.id, str)
+        self.assertIsInstance(model.created_at, datetime)
+        self.assertIsInstance(model.updated_at, datetime)
+
+    def test_str_of_base(self):
+        """this to check __str__ method of BaseModel work in correct"""
+        model = BaseModel()
+        string_representation = str(model)
+        self.assertIn("[BaseModel]", string_representation)
+        self.assertIn(str(model.id), string_representation)
+
+    def test_save_of_base(self):
+        """Test the save"""
+        model = BaseModel()
+        original_updated_at = model.updated_at
+        model.save()
+        self.assertNotEqual(original_updated_at, model.updated_at)
+
+    def test_to_dict(self):
+        """Test the to_dict method of BaseModel"""
+        my_model = BaseModel()
+        my_model.name = "Test Model"
+        my_model_json = my_model.to_dict()
+
+        self.assertIsInstance(my_model_json, dict)
+        self.assertEqual(my_model_json["__class__"], "BaseModel")
+        self.assertEqual(my_model_json["id"], my_model.id)
+        self.assertEqual(my_model_json["created_at"],
+                         my_model.created_at.isoformat())
+        self.assertEqual(my_model_json["updated_at"],
+                         my_model.updated_at.isoformat())
+        self.assertEqual(my_model_json["name"], "Test Model")
+
+    def test_instance_from_dict(self):
+        """check creating an instance from a dictionary"""
+        model = BaseModel()
+        model.name = "Test Model"
+        model_json = model.to_dict()
+
+        new_model = BaseModel(**model_json)
+        self.assertEqual(new_model.id, model.id)
+        self.assertEqual(new_model.created_at, model.created_at)
+        self.assertEqual(new_model.updated_at, model.updated_at)
+        self.assertEqual(new_model.name, "Test Model")
+
+    def test_empty_kwargs(self):
+        """test initialize instance of base with empty dic
+        """
+        base_model = BaseModel(**{})
+        assert isinstance(base_model.id, str)
+        assert isinstance(base_model.created_at, datetime)
+        assert isinstance(base_model.updated_at, datetime)
+
+    def test_updated_after_save(self):
+        """Test update changes after calling save"""
+        model = BaseModel()
+        original_updated_at = model.updated_at
+        model.save()
+        self.assertNotEqual(original_updated_at, model.updated_at)
+
+    def test_attributes_not_included(self):
+
+        data = {
+            'id': '123',
+            'created_at': '2022-01-13T12:34:56.789012',
+            'updated_at': '2022-01-13T12:34:56.789012',
+            'name': 'Test Name'
+        }
+        my_model = BaseModel(**data)
+        self.assertFalse(hasattr(my_model, 'nonexistent_attribute'))
+
 
 if __name__ == '__main__':
     unittest.main()
