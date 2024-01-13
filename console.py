@@ -8,7 +8,7 @@ from datetime import datetime
 from models.base_model import BaseModel
 from models import storage
 from models.user import User
-# from models.place import Place
+from models.place import Place
 # from models.state import State
 # from models.city import City
 # from models.amenity import Amenity
@@ -25,7 +25,8 @@ readline.parse_and_bind('set editing-mode vi')
 
 class_list = {
     'BaseModel': BaseModel,
-    'User': User
+    'User': User,
+    'Place': Place
 }
 
 
