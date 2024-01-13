@@ -1,9 +1,13 @@
 #!/usr/bin/python3
+"""This unitest model for test base class
+"""
 
 import unittest
 from uuid import uuid4
 from datetime import datetime
 from models.base_model import BaseModel
+import json
+from models.user import User
 
 
 class TestBaseModel(unittest.TestCase):

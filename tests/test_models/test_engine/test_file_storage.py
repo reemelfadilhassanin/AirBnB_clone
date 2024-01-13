@@ -6,6 +6,8 @@ from models.base_model import BaseModel
 from models import storage
 import os
 from datetime import datetime
+import json
+from models.user import User
 
 
 class test_fileStorage(unittest.TestCase):
@@ -103,3 +105,47 @@ class test_fileStorage(unittest.TestCase):
 
         self.assertEqual(reloaded_model1.name, modl1.name)
         self.assertEqual(reloaded_model2.name, modl2.name)
+
+    def test_loads_valid_data_and_populates_objects_dictionary(self):
+        # Initialize the class object
+        file_storage = FileStorage()
+
+        # Create a JSON file with valid data
+        valid_data = {
+            "User.1": {
+                "__class__": "User",
+                "id": "1",
+                "name": "John Doe",
+                        "age": 25
+            },
+            "User.2": {
+                "__class__": "User",
+                "id": "2",
+                "name": "Jane Smith",
+                        "age": 30
+            }
+        }
+        with open(file_storage._FileStorage__file_path, 'w') as f:
+            json.dump(valid_data, f)
+
+        # Call the reload method
+        file_storage.reload()
+
+        # Check if the __objects dictionary is populated correctly
+        assert len(file_storage._FileStorage__objects) == 2
+        assert isinstance(file_storage._FileStorage__objects["User.1"], User)
+        assert isinstance(file_storage._FileStorage__objects["User.2"], User)
+        assert file_storage._FileStorage__objects["User.1"].name == "John Doe"
+        assert file_storage._FileStorage__objects["User.1"].age == 25
+        assert file_storage._FileStorage__objects["User.2"].name == "Jane Smith"
+        assert file_storage._FileStorage__objects["User.2"].age == 30
+
+    def test_does_not_load_nonexistent_file_and_does_not_raise_exception(self):
+        # Initialize the class object
+        file_storage = FileStorage()
+
+        # Call the reload method
+        file_storage.reload()
+
+        # Check if the __objects dictionary is empty
+        assert len(file_storage._FileStorage__objects) == 0

@@ -1,4 +1,5 @@
-# models/__init__.py
+"""this module for auto initialize file storage
+"""
 
 from models.engine.file_storage import FileStorage
 
