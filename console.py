@@ -117,40 +117,34 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, args):
         """Updates an instance on the class name and id"""
-        args = args.split()
         if not args:
             print("** class name missing **")
             return
-        if args[0] not in class_list:
+        class_name, *atrr_args = args.split()
+        if class_name not in class_list:
             print("** class doesn't exist **")
             return
 
-        if len(args) < 2:
+        if not atrr_args:
             print("** instance id missing **")
             return
 
         all_obj = storage.all()
-        instance_key = "{}.{}".format(args[0], args[1])
+        instance_key = "{}.{}".format(class_name, atrr_args)
 
         if instance_key not in all_obj:
             print("** no instance found **")
             return
 
-        if len(args) < 3:
+        if len(args) == 1:
             print("** attribute name missing **")
             return
-        if len(args) < 4:
-            print("** value missing **")
-            return
-        if args and args[0] not in class_list:
-            print("** class doesn't exist **")
-            return
         instance = all_obj[instance_key]
-        if args[2].startswith('{') and args[-1].endswith('}'):
+        
+        if atrr_args[1].startswith('{') and atrr_args[-1].endswith('}'):
             try:
-                # convert single quotes
-                json_str = ' '.join(args[2:])
-                value_dict = json.loads(json_str)
+                str_json = ' '.join(args[2:])
+                value_dict = json.loads(str_json)
 
                 for key, value in value_dict.items():
                     setattr(instance, key, value)
@@ -158,9 +152,13 @@ class HBNBCommand(cmd.Cmd):
                 print("json.JSONDecodeError ", str(e))
                 pass
 
-            attr_name = args[2].strip('"')
-            value = ' '.join(args[3:]).strip('"')  # Join val wt spaces
-            # set the new attr for the specific instance
+        else:
+            if len(atrr_args) == 2:
+                print("** value missing **")
+                return
+
+            attr_name = atrr_args[1].strip('"')
+            value = ' '.join(atrr_args[2:]).strip('"')
             setattr(instance, attr_name, normalize_value(value))
 
         instance.updated_at = datetime.now()
