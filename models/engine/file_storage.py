@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 """This storage class for AirBnB to enable persistence"""
-
-
 import os
 import json
 from models.base_model import BaseModel
 from models.user import User
+from uuid import uuid4
+from datetime import datetime
+import models
 
 
 class FileStorage:
@@ -15,7 +16,7 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    def all(self, cls=None):
+    def all(self):
         """ this module for returns the dictionary __objects
         Return:
             returns a dictionary of __object

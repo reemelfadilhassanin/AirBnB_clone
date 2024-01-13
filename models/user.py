@@ -1,4 +1,5 @@
-# Define user class
+#!/usr/bin/python3
+"""This defines user class"""
 from models.base_model import BaseModel
 
 
