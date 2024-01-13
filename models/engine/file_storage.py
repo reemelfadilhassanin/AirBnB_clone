@@ -19,7 +19,7 @@ class FileStorage:
     def all(self):
         """ this module for returns the dictionary __objects
         Return:
-                returns a dictionary of __object
+            returns a dictionary of __object
         """
         return FileStorage.__objects
 
@@ -45,12 +45,10 @@ class FileStorage:
         otherwise, do nothing. If the file doesn’t exist, no exception should be raised)
         """
         try:
-            with open(FileStorage.__file_path, 'r', encoding='utf-8') as file:
-                data = json.load(file)
-                for key, value in data.items():
-                    class_name, obj_id = key.split('.')
-                    class_dict = {'BaseModel': BaseModel, 'User': User}
-                    obj_instance = class_dict[class_name](**value)
-                    FileStorage.__objects[key] = obj_instance
+            with open(self.__file_path, 'r', encoding="UTF-8") as f:
+                data = json.load(f)
+                for k, v in data.items():
+                    v = eval(v["__class__"])(**v)
+                    self.__objects[k] = v
         except FileNotFoundError:
             pass
