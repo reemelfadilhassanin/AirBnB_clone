@@ -23,29 +23,6 @@ readline.parse_and_bind('tab: complete')
 readline.parse_and_bind('set editing-mode vi')
 
 
-def normalize_value(str_v):
-    """function to normalize values"""
-    # check if the value is an integer
-    if str_v.isdigit() or (str_v[0] == '-' and str_v[1:].isdigit()):
-        return int(str_v)
-    # if its just a regular string but has double quotes
-    elif str_v.startswith('"') and not str_v.endswith('"'):
-        return str_v.stri('"')
-
-    # check if the value is a float
-    try:
-        return float(str_v)
-    except (ValueError, Exception):
-        # return as it is if neither int or float
-        return str_v.strip('"')
-
-    # check if the attr is enclosed in double quotes
-    if str_v.startswith('"') and str_v.endswith('"'):
-        return str_v[1:-1]  # Remove the double quotes
-    else:
-        return str_v.strip('"')  # remove the double uotes if found
-
-
 class_list = {
     'BaseModel': BaseModel,
     'User': User
