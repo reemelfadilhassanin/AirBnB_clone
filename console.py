@@ -8,7 +8,11 @@ from datetime import datetime
 from models.base_model import BaseModel
 from models import storage
 from models.user import User
-
+# from models.place import Place
+# from models.state import State
+# from models.city import City
+# from models.amenity import Amenity
+# from models.review import Review
 
 try:
     import gnureadline as readline
@@ -42,24 +46,16 @@ def normalize_value(str_v):
         return str_v.strip('"')  # remove the double uotes if found
 
 
-class_list = {'BaseModel': BaseModel, 'User': User}
+class_list = {
+        'BaseModel': BaseModel,
+        'User': User
+        }
 
 
 class HBNBCommand(cmd.Cmd):
     """ inheriting the Cmd class to customize it by ourself"""
     prompt = ('(hbnb) ')
 
-    def do_quit(self, args):
-        """ Quit command to exit the program"""
-        return True
-
-    def do_EOF(self, args):
-        """ EOF command to exit the program"""
-        return True
-
-    def do_emptyline(self, line):
-        """Do nothing on empty lines."""
-        pass
 
     def do_create(self, args):
         """Create new instance of a class given in {args}"""
@@ -75,7 +71,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_show(self, args):
-        """Prints the string representation of an instance based on the class name and id"""
+        """Prints the string representation of an
+        instance based on the class name and id"""
         if args:
             flag = 0
             words = args.split()
@@ -193,6 +190,18 @@ class HBNBCommand(cmd.Cmd):
         instance.updated_at = datetime.now()
         instance.save()
 
+    def do_quit(self, args):
+        """ Quit command to exit the program"""
+        return True
+
+    def do_EOF(self, args):
+        """ EOF command to exit the program"""
+        print()
+        return True
+
+    def do_emptyline(self):
+        """Do nothing on empty lines."""
+        pass
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
