@@ -1,8 +1,5 @@
 #!/usr/bin/python3
-"""
-HBNBCommand - Entry Point for the Command Interpreter
-More talk
-"""
+""" The entry point of the command interpreter"""
 
 
 import cmd
@@ -17,45 +14,22 @@ from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
-    """
-    HBNBCommand - Command Interpreter for HBNB Application
-    """
+    """ inheriting the Cmd class to customize it by ourself"""
 
     prompt = "(hbnb) "
     classes = ['BaseModel', 'User', 'Amenity',
                'Place', 'City', 'State', 'Review']
 
-    def help_help(self):
-        """Displays the help message"""
-        print("Help:\nhow to use\n\tcreate\tUsage: create <class name>\
-              \n\n\tshow\tUsage: show <class name> <ID>\
-              \n\n\tdestroy\tUsage: destroy <class name> <ID>\
-              \n\n\tall\tUsage: all <class name > || all\
-              \n\n\tupdate\tUsage: update <class name> <id> \
-               <attribute name> <attribute value>")
-        return
-    ###################
-
     def do_EOF(self, line):
-        """Handles the EOF signal"""
+        """ EOF command to exit the program"""
         return True
-
-    def help_EOF(self):
-        """Exits the command interpreter"""
-        print("EOF Quit the command interpreter\n")
-    ########################
 
     def do_quit(self, line):
-        """Quit help info"""
+        """ Quit command to exit the program"""
         return True
 
-    def help_quit(self):
-        """help Quit info """
-        print("Quit the command interpreter\n")
-    #############################
-
     def do_create(self, arg):
-        """Creates a new object"""
+        """Create new instance of a class given in {args}"""
         if not arg:
             print("** class name missing **")
         elif arg not in HBNBCommand.classes:
@@ -64,19 +38,13 @@ class HBNBCommand(cmd.Cmd):
             Models = {'BaseModel': BaseModel, 'User': User, 'Amenity': Amenity,
                       'Place': Place, 'City': City,
                       'State': State, 'Review': Review}
-            my_model = Models[arg]()
-            print(my_model.id)
-            my_model.save()
-
-    def help_create(self):
-        """help Creates a new object"""
-        print("Usage: create <class name>")
-        return
+            new_inst = Models[arg]()
+            print(new_inst.id)
+            new_inst.save()
 
     def emptyline(self):
         """do nothing when empty line"""
         pass
-    ###########################
 
     def do_show(self, line):
         """Displays information about an object"""
@@ -102,12 +70,6 @@ class HBNBCommand(cmd.Cmd):
                     return
             print("** no instance found **")
 
-    def help_show(self):
-        """help Displays information about an object"""
-        print("Usage: show <class name> <ID>")
-        return
-
-    #############################
     def do_destroy(self, line):
         """destroy Deletes an objec at id """
         args = line.split()
@@ -135,13 +97,6 @@ class HBNBCommand(cmd.Cmd):
                     return
             print("** no instance found **")
 
-    def help_destroy(self):
-        """help destroy obj at ID"""
-        print("Usage: destroy <class name> <ID>")
-        return
-
-    ##################
-
     def do_all(self, arg):
         """Displays information about all objects"""
         if arg and arg not in HBNBCommand.classes:
@@ -157,11 +112,6 @@ class HBNBCommand(cmd.Cmd):
             else:
                 instances += [value.__str__()]
         print(instances)
-
-    def help_all(self):
-        """Help Displays information about all objects"""
-        print("all <class name > || all")
-    ####################
 
     def do_update(self, line):
         """Updates an object's attributes"""
@@ -205,12 +155,6 @@ class HBNBCommand(cmd.Cmd):
                     setattr(objc, args[2], value)
                     storage.save()
                     storage.reload()
-
-    def help_update(self):
-        """help Update message"""
-        print("Usage: update <class name> <id> \
-              <attribute name> \"<attribute value>\"")
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
