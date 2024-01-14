@@ -7,6 +7,11 @@ import json
 from models.base_model import BaseModel
 from models.user import User
 from datetime import datetime
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 
 class FileStorage:
@@ -49,6 +54,16 @@ Attributes:
                         cls = BaseModel
                     elif class_name == 'User':
                         cls = User
+                    elif class_name == 'Place':
+                        cls = Place
+                    elif class_name == 'State':
+                        cls = State
+                    elif class_name == 'City':
+                        cls = City
+                    elif class_name == 'Amenity':
+                        cls = Amenity
+                    elif class_name == 'Review':
+                        cls = Review
                     else:
                         # Handle other classes as needed
                         cls = None

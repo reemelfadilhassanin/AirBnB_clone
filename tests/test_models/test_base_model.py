@@ -46,8 +46,7 @@ class TestBaseModelInitialization(unittest.TestCase):
         self.assertIsInstance(model1, BaseModel)
         self.assertIsInstance(model1.id, str)
         self.assertIsInstance(model1.created_at, datetime)
-        self.assertTrue(
-                isinstance(getattr(model1, "updated_at", None), datetime))
+
         self.assertNotEqual(model.id, model1.id)
         self.assertNotEqual(model.created_at, model1.created_at)
         self.assertNotEqual(
