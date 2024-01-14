@@ -14,13 +14,6 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
-try:
-    import gnureadline as readline
-except ImportError:
-    import readline
-
-readline.parse_and_bind('tab: complete')
-readline.parse_and_bind('set editing-mode vi')
 
 
 class_list = {
@@ -59,16 +52,17 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """Create new instance of a class given in {args}"""
-        if args:
-            if args not in class_list:
-                print("** class doesn't exist **")
-                return
-            args = args.split()
-            new_inst = class_list[args[0]]()
-            new_inst.save()
-            print(new_inst.id)
-        else:
+        if not arg:
             print("** class name missing **")
+        elif arg not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+        else:
+            Models = {'BaseModel': BaseModel, 'User': User, 'Amenity': Amenity,
+                      'Place': Place, 'City': City,
+                      'State': State, 'Review': Review}
+            my_model = Models[arg]()
+            print(my_model.id)
+            my_model.save()
 
     def do_show(self, args):
         """Prints the string representation of an
