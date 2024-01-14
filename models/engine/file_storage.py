@@ -1,5 +1,9 @@
+#!/usr/bin/python3
+"""This storage class for AirBnB to enable persistence"""
+
 import json
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:

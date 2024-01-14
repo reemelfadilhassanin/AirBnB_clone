@@ -29,6 +29,7 @@ class_list = {
     'Place': Place
 }
 
+
 def normalize_value(value):
     """function to normalize values"""
     if value.isdigit() or (value[0] == '-' and value[1:].isdigit()):
@@ -42,11 +43,11 @@ def normalize_value(value):
 
         return value.strip('"')
 
-
     if value.startswith('"') and value.endswith('"'):
         return value[1:-1]
     else:
         return value.strip('"')
+
 
 class HBNBCommand(cmd.Cmd):
     """ inheriting the Cmd class to customize it by ourself"""
@@ -159,7 +160,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         instance = all_obj[instance_key]
-        
+
         if atrr_args[1].startswith('{') and atrr_args[-1].endswith('}'):
             try:
                 str_json = ' '.join(args[2:])
