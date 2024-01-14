@@ -115,69 +115,62 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """Prints all string representation of all instances"""
-        if args and args not in class_list:
+        words = args.split()
+        class_name = None
+        if words and words[0] not in class_list:
             print("** class doesn't exist **")
             return
-
-        all_objs = storage.all()
-        instances = []
-        for key, value in all_objs.items():
-            ob_name = value.__class__.__name__
-            if args and ob_name == args:
-                instances += [value.__str__()]
-            else:
-                instances += [value.__str__()]
-        print(instances)
+        if words:
+            class_name = words[0]
+        instances = storage.all()
+        instances_list = []
+        for instance_key in instances:
+            if class_name is None or instance_key.startswith(class_name):
+                instances_list.append(str(instances[instance_key]))
+        print(instances_list)
 
     def do_update(self, args):
         """Updates an instance on the class name and id"""
-        if not args:
+        args = args.split()
+
+        if len(args) == 0:
             print("** class name missing **")
             return
-        class_name, *atrr_args = args.split()
-        if class_name not in class_list:
-            print("** class doesn't exist **")
-            return
 
-        if not atrr_args:
+        elif args[0] not in class_list:
+            print("** class doesn't exist **")
+
+        elif len(args) < 2:
             print("** instance id missing **")
             return
 
-        all_obj = storage.all()
-        instance_key = "{}.{}".format(class_name, atrr_args[0])
-
-        if instance_key not in all_obj:
-            print("** no instance found **")
-            return
-
-        if len(atrr_args) == 1:
-            print("** attribute name missing **")
-            return
-
-        instance = all_obj[instance_key]
-
-        if atrr_args[1].startswith('{') and atrr_args[-1].endswith('}'):
-            try:
-                str_json = ' '.join(args[2:])
-                value_dict = json.loads(str_json)
-
-                for key, value in value_dict.items():
-                    setattr(instance, key, value)
-            except (json.JSONDecodeError, Exception) as e:
-                print("json.JSONDecodeError ", str(e))
-                pass
-
         else:
-            if len(atrr_args) == 2:
+            class_name = args[0]
+            instance_id = args[1]
+
+            objects = storage.all()
+            key = f"{class_name}.{instance_id}"
+
+            if key not in objects:
+                print("** no instance found **")
+                return
+
+            if len(args) < 3:
+                print("** attribute name missing **")
+                return
+
+            elif len(args) < 4:
                 print("** value missing **")
                 return
 
-            attr_name = atrr_args[1].strip('"')
-            value = ' '.join(atrr_args[2:]).strip('"')
-            setattr(instance, attr_name, normalize_value(value))
+            value = args[3].replace('"', '')
 
-        instance.updated_at = datetime.now()
-        instance.save()
+            for key, objc in objects.items():
+                ob_id = objc.id
+                if ob_id == args[1]:
+                    setattr(objc, args[2], value)
+                    storage.save()
+                    storage.reload()
 
     def do_quit(self, args):
         """ Quit command to exit the program"""
