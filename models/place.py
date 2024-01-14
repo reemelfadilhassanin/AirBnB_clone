@@ -2,7 +2,7 @@
 
 """ Place class module that is inhirited from
 BaseModel to create a new Place objects 
-while inheriting all properties of baseModel
+while  inheriting all properties of baseModel
 """
 
 

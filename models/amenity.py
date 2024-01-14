@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-""" Amenity class module
+""" Amenity Class module
 this class inhirted from BaseModel module
 to create a new new amenity objects
 while inheriting all properties of baseModel

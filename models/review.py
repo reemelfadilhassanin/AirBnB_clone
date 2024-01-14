@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-""" Review class module that is inhirited from
+""" Review Class module that is inhirited from
 BaseModel to create a new review objects 
 while inheriting all properties of baseModel
 """

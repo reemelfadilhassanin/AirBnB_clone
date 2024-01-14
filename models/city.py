@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-""" City class module that is inhirited from
+""" City  class module that is inhirited from
 BaseModel to create a new city objects 
 while inheriting all properties of baseModel
 """
