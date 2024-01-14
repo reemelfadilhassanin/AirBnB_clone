@@ -54,15 +54,12 @@ class HBNBCommand(cmd.Cmd):
         """Create new instance of a class given in {args}"""
         if not arg:
             print("** class name missing **")
-        elif arg not in HBNBCommand.classes:
+        elif arg not in class_list:
             print("** class doesn't exist **")
         else:
-            Models = {'BaseModel': BaseModel, 'User': User, 'Amenity': Amenity,
-                      'Place': Place, 'City': City,
-                      'State': State, 'Review': Review}
-            my_model = Models[arg]()
-            print(my_model.id)
-            my_model.save()
+            new_inst = class_list[arg]()
+            print(new_inst.id)
+            new_inst.save()
 
     def do_show(self, args):
         """Prints the string representation of an
