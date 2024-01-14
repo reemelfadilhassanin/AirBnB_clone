@@ -184,6 +184,47 @@ class HBNBCommand(cmd.Cmd):
         """Do nothing on empty lines."""
         pass
 
+    def help_help(self):
+        """Displays the help message"""
+        print("Help:\nhow to use\n\tcreate\tUsage: create <class name>\
+              \n\n\tshow\tUsage: show <class name> <ID>\
+              \n\n\tdestroy\tUsage: destroy <class name> <ID>\
+              \n\n\tall\tUsage: all <class name > || all\
+              \n\n\tupdate\tUsage: update <class name> <id> \
+               <attribute name> <attribute value>")
+        return
+
+    def help_EOF(self):
+        """Exits the command interpreter"""
+        print("EOF Quit the command interpreter\n")
+
+    def help_quit(self):
+        """help Quit info """
+        print("Quit the command interpreter\n")
+
+    def help_create(self):
+        """help Creates a new object"""
+        print("Usage: create <class name>")
+        return
+
+    def help_show(self):
+        """help Displays information about an object"""
+        print("Usage: show <class name> <ID>")
+        return
+
+    def help_destroy(self):
+        """help destroy obj at ID"""
+        print("Usage: destroy <class name> <ID>")
+        return
+
+    def help_all(self):
+        """Help Displays information about all objects"""
+        print("all <class name > || all")
+
+    def help_update(self):
+        """help Update message"""
+        print("Usage: update <class name> <id> \
+              <attribute name> \"<attribute value>\"")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
