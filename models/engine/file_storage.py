@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
-"""
-This storage class for AirBnB to enable persistence
+"""This storage class for AirBnB to enable persistence
 """
 
 import json
