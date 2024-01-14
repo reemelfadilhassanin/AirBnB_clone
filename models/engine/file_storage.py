@@ -44,32 +44,13 @@ Attributes:
             json.dump(serialized_objects, file)
 
     def reload(self):
-        """Deserializes the JSON file to __objects"""
+        """Deserialize the JSON file __file_path to __objects, if it exists."""
         try:
-            with open(self.__file_path, 'r', encoding='utf-8') as file:
-                data = json.load(file)
-                for key, obj_dict in data.items():
-                    class_name = obj_dict['__class__']
-                    if class_name == 'BaseModel':
-                        cls = BaseModel
-                    elif class_name == 'User':
-                        cls = User
-                    elif class_name == 'Place':
-                        cls = Place
-                    elif class_name == 'State':
-                        cls = State
-                    elif class_name == 'City':
-                        cls = City
-                    elif class_name == 'Amenity':
-                        cls = Amenity
-                    elif class_name == 'Review':
-                        cls = Review
-                    else:
-                        # Handle other classes as needed
-                        cls = None
-
-                    if cls:
-                        obj = cls(**obj_dict)
-                        self.__objects[key] = obj
+            with open(FileStorage.__file_path) as f:
+                objdict = json.load(f)
+                for o in objdict.values():
+                    cls_name = o["__class__"]
+                    del o["__class__"]
+                    self.new(eval(cls_name)(**o))
         except FileNotFoundError:
-            pass
+            return
