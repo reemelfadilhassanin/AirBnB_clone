@@ -4,6 +4,7 @@
 
 from models.base_model import BaseModel
 
+
 class State(BaseModel):
-	"""State class inhirted from BaseModel class"""
-	name = ""
+    """State class inhirted from BaseModel class"""
+    name = ""

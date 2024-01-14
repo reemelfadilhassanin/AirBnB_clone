@@ -10,7 +10,8 @@ class BaseModel:
     """ this model is base for all model in airbnb clone
     it contains the following attributes and methods :
     - id (str): unique identifier of a object instance
-    - created_at (datetime): creation date of an object instance when the object is
+    - created_at (datetime): creation date of an
+    object instance when the object is
     created. Defaults to current UTC datetime
     - updated_at (datetime): last update date of an object instance.
     """
