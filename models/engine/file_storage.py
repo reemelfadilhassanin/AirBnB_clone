@@ -1,12 +1,23 @@
 #!/usr/bin/python3
-"""This storage class for AirBnB to enable persistence"""
+
+"""
+This storage class for AirBnB to enable persistence
+"""
 
 import json
 from models.base_model import BaseModel
 from models.user import User
+from datetime import datetime
 
 
 class FileStorage:
+    """
+    this class enable serializes instances to a JSON file
+      and deserializes JSON file to instances
+Attributes:
+- _file_name (str): the name of the data file
+- _users (list): list of users objects
+    """
     __file_path = "file.json"
     __objects = {}
 
