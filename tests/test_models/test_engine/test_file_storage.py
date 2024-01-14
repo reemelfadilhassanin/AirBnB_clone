@@ -56,9 +56,6 @@ class TestAllInstanceMethod(unittest.TestCase):
         self.assertTrue(len(all_objects) == 2 + initial_objects_count)
         self.assertIn(model_instance2, all_objects.values())
 
-        with self.assertRaises(TypeError):
-            storage_instance.all("name")
-
 
 class TestNewInstanceMethod(unittest.TestCase):
     """Test 'new' instance method on FileStorage instance."""
