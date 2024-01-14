@@ -87,46 +87,47 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, args):
         """Deletes an instance based on class name and id"""
-        args = line.split()
+        if args:
+            flag = 0
+            words = args.split()
+            if len(words) < 2:
+                print("** instance id missing **")
+                return
+            if words[0] not in class_list:
+                print("** class doesn't exist **")
+                return
 
-        if len(args) == 0:
-            print("** class name missing **")
-            return
+            all_obj = storage.all()
+            instance_key = "{}.{}".format(words[0], words[1])
 
-        elif args[0] not in class_list:
-            print("** class doesn't exist **")
+            for key, obj in all_obj.items():
+                if key.split('.')[1] == words[1]:
+                    del all_obj[instance_key]
+                    storage.save()
+                    flag = 1
+                    break
 
-        elif len(args) < 2:
-            print("** instance id missing **")
-            return
+            if flag == 0:
+                print("** no instance found **")
 
         else:
-            all_objs = storage.all()
-            for key, value in all_objs.items():
-                ob_name = value.__class__.__name__
-                ob_id = value.id
-                if ob_name == args[0] and ob_id == args[1]:
-                    del value
-                    del storage._FileStorage__objects[key]
-                    storage.save()
-                    return
-            print("** no instance found **")
+            print("** class name missing **")
 
     def do_all(self, args):
         """Prints all string representation of all instances"""
-        words = args.split()
-        class_name = None
-        if words and words[0] not in class_list:
+        if args and args not in class_list:
             print("** class doesn't exist **")
             return
-        if words:
-            class_name = words[0]
-        instances = storage.all()
-        instances_list = []
-        for instance_key in instances:
-            if class_name is None or instance_key.startswith(class_name):
-                instances_list.append(str(instances[instance_key]))
-        print(instances_list)
+
+        all_objs = storage.all()
+        instances = []
+        for key, value in all_objs.items():
+            ob_name = value.__class__.__name__
+            if args and ob_name == args:
+                instances += [value.__str__()]
+            else:
+                instances += [value.__str__()]
+        print(instances)
 
     def do_update(self, args):
         """Updates an instance on the class name and id"""
