@@ -1,13 +1,19 @@
 #!/usr/bin/python3
-""" Place class module"""
 
-import uuid
-from datetime import datetime
-from models import storage
+""" Place class module that is inhirited from
+BaseModel to create a new Place objects 
+while inheriting all properties of baseModel
+"""
+
+
 from models.base_model import BaseModel
 
+
 class Place(BaseModel):
-	"""Place class inhirted from BaseModel class"""
+	"""Place class inhirted from BaseModel class
+	with sevral new public atrr as 
+	str and int
+	"""
 	city_id = ""
 	user_id = ""
 	name = ""
