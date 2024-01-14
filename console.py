@@ -64,7 +64,31 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, args):
         """Prints the string representation of an
         instance based on the class name and id"""
-        args = args.split()
+        if args:
+            flag = 0
+            words = args.split()
+            if len(words) < 2:
+                print("** instance id missing **")
+                return
+            if words[0] not in class_list:
+                print("** class doesn't exist **")
+                return
+
+            all_obj = storage.all()
+            instance_key = "{}.{}".format(words[0], words[1])
+            if instance_key in all_obj:
+                print(all_obj[instance_key])
+            else:
+                print("** no instance found **")
+                return
+        else:
+            print("** class name missing **")
+            return
+
+    def do_destroy(self, args):
+        """Deletes an instance based on class name and id"""
+        args = line.split()
+
         if len(args) == 0:
             print("** class name missing **")
             return
@@ -82,37 +106,11 @@ class HBNBCommand(cmd.Cmd):
                 ob_name = value.__class__.__name__
                 ob_id = value.id
                 if ob_name == args[0] and ob_id == args[1]:
-                    print(value)
+                    del value
+                    del storage._FileStorage__objects[key]
+                    storage.save()
                     return
             print("** no instance found **")
-
-    def do_destroy(self, args):
-        """Deletes an instance based on class name and id"""
-        if args:
-            flag = 0
-            words = args.split()
-            if len(words) < 2:
-                print("** instance id missing **")
-                return
-            if words[0] not in class_list:
-                print("** class doesn't exist **")
-                return
-
-            all_obj = storage.all()
-            instance_key = "{}.{}".format(words[0], words[1])
-
-            for key, obj in all_obj.items():
-                if key.split('.')[1] == words[1]:
-                    del all_obj[instance_key]
-                    storage.save()
-                    flag = 1
-                    break
-
-            if flag == 0:
-                print("** no instance found **")
-
-        else:
-            print("** class name missing **")
 
     def do_all(self, args):
         """Prints all string representation of all instances"""
