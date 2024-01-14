@@ -50,13 +50,25 @@ Attributes:
             json.dump(my_dict, fil)
 
     def reload(self):
-        """define deserializes the JSON file to __objects (only if the JSON file (__file_path) exists,
-        otherwise, do nothing. If the file doesn’t exist, no exception should be raised)
-        """
+        """Deserializes the JSON file to __objects"""
         try:
             with open(self.__file_path, 'r', encoding="UTF-8") as f:
-                for k, v in (json.load(f)).items():
-                    v = eval(v["__class__"])(**v)
-                    self.__objects[k] = v
+                data = json.load(f)
+
+                # Update the class mapping
+                class_mapping = {
+                    'State': State,
+                    'City': City,
+                    'Amenity': Amenity,
+                    'Place': Place,
+                    'Review': Review
+                    # Add more classes as needed
+                }
+
+                for k, v in data.items():
+                    class_name = v.get('__class__', 'BaseModel')
+                    if class_name in class_mapping:
+                        obj = class_mapping[class_name](**v)
+                        self.__objects[k] = obj
         except FileNotFoundError:
             pass
