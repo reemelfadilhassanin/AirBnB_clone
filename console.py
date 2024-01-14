@@ -113,6 +113,19 @@ class HBNBCommand(cmd.Cmd):
                 instances += [value.__str__()]
         print(instances)
 
+
+@staticmethod
+def all(cls_name):
+    """Retrieve all instances of a class"""
+    if cls_name and cls_name not in HBNBCommand.classes:
+        print("** class doesn't exist **")
+        return []
+
+    all_objs = storage.all()
+    instances = [str(value) for key, value in all_objs.items()
+                 if isinstance(value, globals()[cls_name])]
+    return instances
+
     def do_update(self, line):
         """Updates an object's attributes"""
         args = line.split()
