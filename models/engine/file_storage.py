@@ -26,39 +26,31 @@ Attributes:
 
     def all(self):
         """Returns the dictionary __objects"""
-        return self.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         """Sets in __objects the obj with key <obj class name>.id"""
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
+        key = "{}.{}".format(type(obj).__name__, obj.id)
         self.__objects[key] = obj
 
     def save(self):
         """Serializes __objects to the JSON file (path: __file_path)"""
-        serialized_objects = {}
-        for key, obj in self.__objects.items():
-            serialized_objects[key] = obj.to_dict()
-
-        with open(self.__file_path, 'w', encoding='utf-8') as file:
-            json.dump(serialized_objects, file)
+        serialized = {
+            key: val.to_dict()
+            for key, val in self.__objects.items()
+        }
+        with open(FileStorage.__file_path, "w") as f:
+            f.write(json.dumps(serialized))
 
     def reload(self):
         """Deserializes the JSON file to __objects"""
         try:
-            with open(self.__file_path, 'r', encoding='utf-8') as file:
-                data = json.load(file)
-                for key, obj_dict in data.items():
-                    class_name = obj_dict['__class__']
-                    if class_name == 'BaseModel':
-                        cls = BaseModel
-                    elif class_name == 'User':
-                        cls = User
-                    else:
-                        # Handle other classes as needed
-                        cls = None
-
-                    if cls:
-                        obj = cls(**obj_dict)
-                        self.__objects[key] = obj
+            deserialized = {}
+            with open(FileStorage.__file_path, "r") as f:
+                deserialized = json.loads(f.read())
+            FileStorage.__objects = {
+                key:
+                    eval(obj["__class__"])(**obj)
+                    for key, obj in deserialized.items()}
         except FileNotFoundError:
             pass
