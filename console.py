@@ -136,9 +136,10 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
             return
 
-        if len(args) == 1:
+        if len(atrr_args) == 1:
             print("** attribute name missing **")
             return
+
         instance = all_obj[instance_key]
         
         if atrr_args[1].startswith('{') and atrr_args[-1].endswith('}'):
