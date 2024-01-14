@@ -9,10 +9,10 @@ from models.base_model import BaseModel
 from models import storage
 from models.user import User
 from models.place import Place
-# from models.state import State
-# from models.city import City
-# from models.amenity import Amenity
-# from models.review import Review
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 try:
     import gnureadline as readline
@@ -26,7 +26,11 @@ readline.parse_and_bind('set editing-mode vi')
 class_list = {
     'BaseModel': BaseModel,
     'User': User,
-    'Place': Place
+    'Place': Place,
+    'State': State,
+    'City': City,
+    'Amenity': Amenity,
+    'Review': Review
 }
 
 
