@@ -46,7 +46,14 @@ Attributes:
                 data = json.load(file)
                 for key, obj_dict in data.items():
                     class_name = obj_dict['__class__']
-                    cls = BaseModel if class_name == 'BaseModel' else None  # Update with other classes
+                    if class_name == 'BaseModel':
+                        cls = BaseModel
+                    elif class_name == 'User':
+                        cls = User
+                    else:
+                        # Handle other classes as needed
+                        cls = None
+
                     if cls:
                         obj = cls(**obj_dict)
                         self.__objects[key] = obj
