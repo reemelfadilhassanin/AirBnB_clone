@@ -23,13 +23,13 @@ class_list = {
         'Review': Review
         }
 
+
 class HBNBCommand(cmd.Cmd):
     """ inheriting the Cmd class to customize it by ourself"""
 
     prompt = "(hbnb) "
     classes = ['BaseModel', 'User', 'Amenity',
                'Place', 'City', 'State', 'Review']
-
 
     def onecmd(self, line):
         """Handles commands not explicitly defined in do_ methods."""
