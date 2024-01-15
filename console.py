@@ -3,6 +3,7 @@
 
 
 import cmd
+import re
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -12,6 +13,15 @@ from models.amenity import Amenity
 from models.state import State
 from models.review import Review
 
+class_list = {
+        'BaseModel': BaseModel,
+        'User': User,
+        'Place': Place,
+        'State': State,
+        'City': City,
+        'Amenity': Amenity,
+        'Review': Review
+        }
 
 class HBNBCommand(cmd.Cmd):
     """ inheriting the Cmd class to customize it by ourself"""
@@ -19,6 +29,50 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     classes = ['BaseModel', 'User', 'Amenity',
                'Place', 'City', 'State', 'Review']
+
+
+    def onecmd(self, line):
+        """Handles commands not explicitly defined in do_ methods."""
+        match = re.match(
+            r'^(?P<class_name>\w*)\.show\(["\']?(?P<id>[\w-]*)["\']?\)$',
+            line)
+        if match:
+            class_name = match.group('class_name')
+            if not class_name:
+                print("** class name missing **")
+                return
+
+            if class_name not in class_list:
+                print("** class doesn't exist **")
+                return
+            else:
+                isinstance_id = match.group('id')
+                if not isinstance_id:
+                    print("** instance id missing **")
+                    return
+                self.do_show(f"{class_name} {isinstance_id}")
+                return
+        match = re.match(
+            r'^(?P<class_name>\w*)\.destroy\(["\']?(?P<id>[\w-]*)["\']?\)$',
+            line)
+        if match:
+            class_name = match.group('class_name')
+            if not class_name:
+                print("** class name missing **")
+                return
+
+            if class_name not in class_list:
+                print("** class doesn't exist **")
+                return
+            else:
+                isinstance_id = match.group('id')
+                if not isinstance_id:
+                    print("** instance id missing **")
+                    return
+                self.do_destroy(f"{class_name} {isinstance_id}")
+                return
+
+        return super().onecmd(line)
 
     def do_EOF(self, line):
         """ EOF command to exit the program"""
@@ -112,19 +166,6 @@ class HBNBCommand(cmd.Cmd):
             else:
                 instances += [value.__str__()]
         print(instances)
-
-
-@staticmethod
-def all(cls_name):
-    """Retrieve all instances of a class"""
-    if cls_name and cls_name not in HBNBCommand.classes:
-        print("** class doesn't exist **")
-        return []
-
-    all_objs = storage.all()
-    instances = [str(value) for key, value in all_objs.items()
-                 if isinstance(value, globals()[cls_name])]
-    return instances
 
     def do_update(self, line):
         """Updates an object's attributes"""
