@@ -186,6 +186,7 @@ class TestCity_to_dict(unittest.TestCase):
         self.assertNotEqual(cy.to_dict(), cy.__dict__)
 
     def test_to_dict_with_arg(self):
+        """ this module to test dictionary with argument"""
         cy = City()
         with self.assertRaises(TypeError):
             cy.to_dict(None)
