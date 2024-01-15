@@ -45,6 +45,28 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** class doesn't exist **")
             return
+        match = re.match(r'^(?P<class_name>\w*)\.count\(\)$', line)
+        if match:
+            class_name = match.group('class_name')
+            if not class_name:
+                print("** class name missing **")
+                return
+            if class_name not in class_list:
+                print("** class doesn't exist **")
+                return
+
+            if class_name in class_list:
+                instances = storage.all()
+                count = sum(1 for instance_key
+                            in instances if
+                            instance_key.startswith(
+                                class_name)
+                            )
+                print(count)
+            else:
+                print("** class doesn't exist **")
+            return
+
         match = re.match(
             r'^(?P<class_name>\w*)\.show\(["\']?(?P<id>[\w-]*)["\']?\)$',
             line)
