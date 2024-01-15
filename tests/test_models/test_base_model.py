@@ -38,6 +38,7 @@ class TestBaseModel_instantiation(unittest.TestCase):
         self.assertNotEqual(bm1.id, bm2.id)
 
     def test_two_models_different_created_at(self):
+        """this to test if two model is created"""
         bm1 = BaseModel()
         sleep(0.05)
         bm2 = BaseModel()
@@ -50,6 +51,7 @@ class TestBaseModel_instantiation(unittest.TestCase):
         self.assertLess(bm1.updated_at, bm2.updated_at)
 
     def test_str_representation(self):
+        """ test the str represnttion"""
         dt = datetime.today()
         dt_repr = repr(dt)
         bm = BaseModel()
