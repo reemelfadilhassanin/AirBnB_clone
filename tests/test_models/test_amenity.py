@@ -26,6 +26,7 @@ class TestAmenity_instantiation(unittest.TestCase):
         self.assertEqual(str, type(Amenity().id))
 
     def test_created_at_is_public_datetime(self):
+        """ test public datetime"""
         self.assertEqual(datetime, type(Amenity().created_at))
 
     def test_updated_at_is_public_datetime(self):
@@ -71,7 +72,7 @@ class TestAmenity_instantiation(unittest.TestCase):
         self.assertNotIn(None, am.__dict__.values())
 
     def test_instantiation_with_kwargs(self):
-        """instantiation with kwargs test method"""
+        """instantiation with kwargs test"""
         dt = datetime.today()
         dt_iso = dt.isoformat()
         am = Amenity(id="345", created_at=dt_iso, updated_at=dt_iso)
@@ -136,12 +137,13 @@ class TestAmenity_save(unittest.TestCase):
 
 
 class TestAmenity_to_dict(unittest.TestCase):
-    """Unittests for testing to_dict method of the Amenity class."""
+    """Unittests for testing to_dict method of Amenity"""
 
     def test_to_dict_type(self):
         self.assertTrue(dict, type(Amenity().to_dict()))
 
     def test_to_dict_contains_correct_keys(self):
+        """ test keyyys"""
         am = Amenity()
         self.assertIn("id", am.to_dict())
         self.assertIn("created_at", am.to_dict())
@@ -156,6 +158,7 @@ class TestAmenity_to_dict(unittest.TestCase):
         self.assertIn("my_number", am.to_dict())
 
     def test_to_dict_datetime_attributes_are_strs(self):
+        """ test the datatime"""
         am = Amenity()
         am_dict = am.to_dict()
         self.assertEqual(str, type(am_dict["id"]))
