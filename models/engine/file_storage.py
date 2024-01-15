@@ -28,7 +28,7 @@ Attributes:
     def all(self, cls=None):
         """ this module for returns the dictionary __objects
         Return:
-                returns a dictionary of __object
+                returns all  dictionary of __object
         """
         return FileStorage.__objects
 
