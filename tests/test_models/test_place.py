@@ -18,6 +18,7 @@ class TestPlace_instantiation(unittest.TestCase):
     """Unittests for testing instantiation of the Place class."""
 
     def test_no_args_instantiates(self):
+        """ this for test number of arguments"""
         self.assertEqual(Place, type(Place()))
 
     def test_new_instance_stored_in_objects(self):
