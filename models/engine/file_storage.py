@@ -50,7 +50,7 @@ Attributes:
             json.dump(my_dict, fil)
 
     def classes(self):
-        """Returns a dictionary of valid classes and their references."""
+        """match the classe"""
         from models.base_model import BaseModel
         from models.user import User
         from models.state import State
