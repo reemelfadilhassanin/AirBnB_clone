@@ -33,6 +33,18 @@ class HBNBCommand(cmd.Cmd):
 
     def onecmd(self, line):
         """Handles commands not explicitly defined in do_ methods."""
+        match = re.match(r'^(?P<class_name>\w*)\.all\(\)$', line)
+        if match:
+            class_name = match.group('class_name')
+            if not class_name:
+                print("** class name missing **")
+                return
+
+            if class_name in class_list:
+                self.do_all(class_name)
+            else:
+                print("** class doesn't exist **")
+            return
         match = re.match(
             r'^(?P<class_name>\w*)\.show\(["\']?(?P<id>[\w-]*)["\']?\)$',
             line)
