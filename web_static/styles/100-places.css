@@ -17,7 +17,7 @@ article {
     padding-top: 10px;
     padding-right: 20px;
     padding-left: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
     margin: 20px;
 
     border: 1px solid #FF5A5F;
@@ -125,4 +125,77 @@ article h2 {
     background-position: center;
     width: 50px;
     height: 50px;
+}
+
+.tv {
+    display: inline-block;
+    background-image: url("../images/tv.png");
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+
+    margin-right: 10px;
+}
+
+.wifi {
+    display: inline-block;
+    background-image: url("../images/wifi.png");
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+
+    margin-right: 10px;
+}
+
+.pet {
+    display: inline-block;
+    background-image: url("../images/pets.png");
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+
+    margin-right: 10px;
+}
+
+
+.article_title {
+    font-size: 30px;
+    margin: 10px auto;
+    padding: 0px;
+}
+
+article ul {
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+
+article li {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: flex-start;
+    margin-bottom: 10px;
+}
+
+.reviews {
+    margin-top: 40px;
+    width: 100%;
+}
+
+.review_sub {
+    margin-bottom: 10px;
+}
+
+.review_text {
+    margin: 0px;
+}
+
+article h3 {
+    font-size: 14px;
+    padding: 0px;
+    margin: 0px;
+    margin-bottom: 5px;
+
 }
